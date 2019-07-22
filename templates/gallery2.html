@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+{% for photos in data %}
+{% if loop.index == 1 %}
+  <div class="gallerycontainer ymySlides text-center"><h2>{{photos["title"]}}</h2></div>
+{% else %}
+  <div class="gallerycontainer ymySlides text-center" style="display:none"><h2>{{photos["title"]}}</h2></div>
+{% endif %}
+{% endfor %}
+
+<div class="w3-content book" style="max-width:1200px">
+
+  {% for photos in data %}
+
+  {% if loop.index == 1 %}
+  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:50%">
+  {% else %}
+  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:50%;display:none">
+  {% endif %}
+  {% endfor %}
+
+</div>
+
+{% for photos in data %}
+{% if loop.index == 1 %}
+  <div class="gallerycontainer zmySlides text-center"><h5>{{photos["comment"]}}</h5></div>
+{% else %}
+  <div class="gallerycontainer zmySlides text-center" style="display:none"><h5>{{photos["comment"]}}</h5></div>
+{% endif %}
+{% endfor %}
+
+<div class="gallerycontainer">
+<center>
+<table class="gallery">
+<div class="w3-row-padding w3-section">
+<tr>
+  {% for photos in data %}
+  <div class="w3-col s4">
+  <td>
+  <img class="gallery demo w3-opacity w3-hover-opacity-off" src='static/photos/{{photos["file"]}}' style="height:200px;width:auto;cursor:pointer" onclick="currentDiv({{loop.index}})">
+  <td>
+  </div>
+  {% if loop.index is divisibleby 3 %}
+</tr><tr>
+  {% endif %}
+  {% endfor %}
+</tr>
+</div>
+</table></center>
+</div>
+
+
+
+
+<script>
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var y = document.getElementsByClassName("ymySlides");
+  var z = document.getElementsByClassName("zmySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+    y[i].style.display = "none";
+    z[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  y[slideIndex-1].style.display = "block";
+  z[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-opacity-off";
+}
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}
