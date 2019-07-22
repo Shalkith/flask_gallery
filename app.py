@@ -2,11 +2,79 @@ from flask import Flask, render_template, request,redirect, url_for
 import string
 import os
 from data import get_images,jsonreader,jsonwriter,jsondelete
+import flask_login
 
-key = str(os.urandom(24))
 app = Flask(__name__)
-app.debug=True
+key = str(os.urandom(24))
 app.secret_key = key
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+users = {'foo@bar.tld': {'password': 'secret'}, 'paul':{'password':'12345'}}
+
+class User(flask_login.UserMixin):
+    pass
+
+@login_manager.user_loader
+def user_loader(email):
+    if email not in users:
+        return
+    user = User()
+    user.id = email
+    return user
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+
+
+    # DO NOT ever store passwords in plaintext and always compare password
+    # hashes using constant-time comparison!
+    user.is_authenticated = request.form['password'] == users[email]['password']
+
+    return user
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+            return render_template('login.html')
+
+
+    email = request.form['email']
+    try:
+
+        if request.form['password'] == users[email]['password']:
+            user = User()
+            user.id = email
+            flask_login.login_user(user)
+            return redirect(url_for('gallery'))
+
+    except:
+        pass
+    return 'Bad login  <meta http-equiv="Refresh" content="2; url=/login">'
+
+
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out <meta http-equiv="Refresh" content="5; url=/">'
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
+
+
+######### login goes up here ^
+app.debug=True
 
 class BenefitTemplateService(object):
 
@@ -35,6 +103,11 @@ def page_not_found(e):
 def home():
     return render_template('home.html')
 
+#@app.route('/signup', methods=['GET', 'POST'])
+#def register():
+#    return "Signup"
+
+
 
 @app.route('/about')
 def about():
@@ -52,6 +125,7 @@ def gallery():
     return render_template('gallery2.html',data = data)
 
 @app.route('/edit',methods=['GET', 'POST'])
+@flask_login.login_required
 def edit():
     data = jsonreader()
     newlist = []
@@ -60,6 +134,7 @@ def edit():
     return render_template('edit.html',data = data)
 
 @app.route('/new',methods=['GET', 'POST'])
+@flask_login.login_required
 def new():
     return render_template('new.html')
 
@@ -101,5 +176,4 @@ def delete():
 
 
 if __name__ == '__main__':
-    #Guildname()
     app.run(host='0.0.0.0')
