@@ -41,7 +41,7 @@
   {% for photos in data %}
   <div class="w3-col s4">
   <td>
-  <img class="gallery demo w3-opacity w3-hover-opacity-off" src='static/photos/{{photos["file"]}}' style="height:200px;width:auto;cursor:pointer" onclick="currentDiv({{loop.index}})">
+  <img class="gallery demo w3-opacity w3-hover-opacity-off" src='static/photos/{{photos["file"]}}' style="height:auto;width:80%;cursor:pointer" onclick="currentDiv({{loop.index}})">
   <td>
   </div>
   {% if loop.index is divisibleby 3 %}
