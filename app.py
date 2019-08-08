@@ -6,11 +6,12 @@ import flask_login
 
 app = Flask(__name__)
 key = str(os.urandom(24))
+key = 'DSFNGDMQWT9J9ASFNM9AIONC90MC09M'
 app.secret_key = key
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-users = {'foo@bar.tld': {'password': 'secret'}, 'paul':{'password':'12345'}}
+users = {'foo@bar.tld': {'password': 'secret'}, 'paul':{'password':'12345'}, 'michelle':{'password':'12345'}}
 
 class User(flask_login.UserMixin):
     pass
