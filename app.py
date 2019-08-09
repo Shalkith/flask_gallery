@@ -4,6 +4,10 @@ import os
 from data import get_images,jsonreader,jsonwriter,jsondelete
 import flask_login
 
+
+filepath = os.path.dirname(__file__)
+
+
 app = Flask(__name__)
 key = str(os.urandom(24))
 key = 'DSFNGDMQWT9J9ASFNM9AIONC90MC09M'
@@ -116,7 +120,7 @@ def about():
 
 @app.route('/mygallery')
 def gallery():
-    data = jsonreader()
+    data = jsonreader(filepath)
     newlist = []
     data = data['photos']
     for x in data:
@@ -128,7 +132,7 @@ def gallery():
 @app.route('/edit',methods=['GET', 'POST'])
 @flask_login.login_required
 def edit():
-    data = jsonreader()
+    data = jsonreader(filepath)
     newlist = []
     data = data['photos']
     #return str(data)
@@ -145,7 +149,7 @@ def process():
     if request.method=="POST":
         parameters = request.form.to_dict()
         response = BenefitTemplateService.create(parameters)
-        jsonwriter(response)
+        jsonwriter(response,filepath)
         return redirect(url_for('edit'))
     else:
         return 'this is not a post'
@@ -159,7 +163,7 @@ def upload():
         response = BenefitTemplateService.create(parameters)
         del response['credit_behavior']
         response['file'] = f.filename.replace(" ","",99)
-        jsonwriter(response)
+        jsonwriter(response,filepath)
         return redirect(url_for('gallery'))
     else:
         return redirect(url_for('home'))
@@ -169,7 +173,7 @@ def delete():
     if request.method=="POST":
         parameters = request.form.to_dict()
         response = BenefitTemplateService.create(parameters)
-        jsondelete(response)
+        jsondelete(response,filepath)
 
         return redirect(url_for('edit'))
     else:

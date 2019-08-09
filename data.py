@@ -8,13 +8,13 @@ def get_images():
             photos.append(x)
     return photos
 
-def jsonreader():
-    file = 'static/json/photos.json'
+def jsonreader(filepath):
+    file = filepath+'/static/json/photos.json'
     with open(file) as json_file:
         return json.load(json_file)
 
-def jsonwriter(jsondata):
-    file = 'static/json/photos.json'
+def jsonwriter(jsondata,filepath):
+    file = filepath+'/static/json/photos.json'
 
     with open(file) as json_file:
         currentdata = json.load(json_file)
@@ -34,15 +34,15 @@ def jsonwriter(jsondata):
         json.dump(currentdata, outfile)
 
 
-def jsondelete(jsondata):
-    file = 'static/json/photos.json'
+def jsondelete(jsondata,filepath):
+    file = filepath+'/static/json/photos.json'
 
     with open(file) as json_file:
         currentdata = json.load(json_file)
     for x in currentdata["photos"]:
         if x['file'] == jsondata['file']:
             del currentdata["photos"][currentdata["photos"].index(x)]
-            os.remove('static/photos/'+x['file'])
+            os.remove(filepath+'/static/photos/'+x['file'])
         else:
             pass
     with open(file, 'w') as outfile:
