@@ -16,8 +16,7 @@ sys.stdout = sys.stderr
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..'))
 
 ##Add this file path to sys.path in order to import app
-sys.path.append('/usr/share/FlaskApp/')
+sys.path.append('/usr/share/flask_gallery/')
 
 ##Create appilcation for our app
 from app import app as application
-
