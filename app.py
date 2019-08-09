@@ -118,6 +118,11 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route('/home')
+def home2():
+    return redirect(url_for('home'))
+
+
 @app.route('/mygallery')
 def gallery():
     data = jsonreader(filepath)
