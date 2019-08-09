@@ -66,7 +66,7 @@ def login():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return 'Logged out <meta http-equiv="Refresh" content="5; url=/">'
+    return redirect(url_for('home'))
 
 
 @login_manager.unauthorized_handler
@@ -114,7 +114,7 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route('/gallery')
+@app.route('/mygallery')
 def gallery():
     data = jsonreader()
     newlist = []
