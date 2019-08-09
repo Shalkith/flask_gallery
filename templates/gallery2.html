@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+<link rel="stylesheet" href="static/css/gallery.css">
 
 {% block body %}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -17,9 +18,9 @@
   {% for photos in data %}
 
   {% if loop.index == 1 %}
-  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:50%">
+  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:100%">
   {% else %}
-  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:50%;display:none">
+  <img class="gallery mySlides" src="static/photos/{{photos["file"]}}" style="width:100%;display:none">
   {% endif %}
   {% endfor %}
 
@@ -33,26 +34,19 @@
 {% endif %}
 {% endfor %}
 
-<div class="gallerycontainer">
-<center>
-<table class="gallery">
-<div class="w3-row-padding w3-section">
-<tr>
+
+
+<div class="row">
+  <div class="column">
   {% for photos in data %}
-  <div class="w3-col s4">
-  <td>
-  <img class="gallery demo w3-opacity w3-hover-opacity-off" src='static/photos/{{photos["file"]}}' style="height:auto;width:80%;cursor:pointer" onclick="currentDiv({{loop.index}})">
-  <td>
-  </div>
+  <img class="gallery demo w3-opacity w3-hover-opacity-off" src='static/photos/{{photos["file"]}}' style="height:auto;width:60%;cursor:pointer" onclick="clickandmove({{loop.index}})">
   {% if loop.index is divisibleby 3 %}
-</tr><tr>
+</div>
+<div class="column">
   {% endif %}
   {% endfor %}
-</tr>
 </div>
-</table></center>
 </div>
-
 
 
 
@@ -82,6 +76,32 @@ function showDivs(n) {
   z[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " w3-opacity-off";
 }
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("myBtn").style.display = "block";
+  } else {
+    document.getElementById("myBtn").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+
+function clickandmove(index){
+currentDiv(index);
+topFunction();
+}
+
+onclick=""
+
 </script>
 
 

@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+<link rel="stylesheet" href="static/css/gallery.css">
 {% block body %}
 
 <style>
@@ -16,10 +16,10 @@
 
 
 {% for photo in data %}
-<div class="gallerycontainer text-center">
-<form class="admin text-center" action='process' Method="POST">
+<div class="gallerycontainer text-center admin2"><br>
+<form class="text-center" action='process' Method="POST">
 <fieldset id="{{photo["file"]}}">
-<img class="admin" src='static/photos/{{photo["file"]}}' style="width:10%">
+<img class="" src='static/photos/{{photo["file"]}}' style="width:80%"><br>
 File Name: <input type="text" name="file" value="{{photo["file"]}}" readonly><br>
 Title: <input type="text" name="title" value="{{photo["title"]}}"><br>
 Comment: <input type="text" name="comment" value="{{photo["comment"]}}"><br>

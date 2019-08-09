@@ -1,24 +1,31 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
  <div class="container-fluid">
    <div class="navbar-header">
-     <a class="navbar-brand" href="#">How Art Thou</a>
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+<a class="navbar-brand" href="#">How Art Thou</a>
    </div>
-   <ul class="nav navbar-nav">
-     <li><a href="/">Home</a></li>
-     <li><a href="gallery">Gallery</a></li>
-     <li><a href="about">About Me</a></li>
-   </ul>
-   <ul class="nav navbar-nav navbar-right">
-     {% if current_user.is_authenticated %}
+   <div class="collapse navbar-collapse" id="myNavbar">
+     <ul class="nav navbar-nav">
+       <li><a href="/">Home</a></li>
+       <li><a href="gallery">Gallery</a></li>
+       <li><a href="about">About Me</a></li>
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+       {% if current_user.is_authenticated %}
 
-     <li><a href="edit"><span ></span> Edit</a></li>
-     <li><a href="new"><span ></span> New Photo</a></li>
+       <li><a href="edit"><span ></span> Edit</a></li>
+       <li><a href="new"><span ></span> New Photo</a></li>
 
 
-<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Signout {{ current_user.id }}</a></li>
-{% else %}
-     <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-{% endif %}
-   </ul>
+  <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Signout {{ current_user.id }}</a></li>
+  {% else %}
+       <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+  {% endif %}
+     </ul>
+   </div>
  </div>
 </nav>
